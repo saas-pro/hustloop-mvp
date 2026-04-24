@@ -1,0 +1,59 @@
+.button-file {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.button-file i {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px; /* the thickness of the border */
+  /* the below will do the magic */
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, /* this will cover only the content area (no padding) */ 
+     linear-gradient(#fff 0 0); /* this will cover all the area */
+  -webkit-mask-composite: xor; /* needed for old browsers until the below is more supported */
+  mask: 
+     linear-gradient(#fff 0 0) content-box,
+     linear-gradient(#fff 0 0);
+  mask-composite: exclude; /* this will exclude the first layer from the second so only the padding area will be kept visible */
+}
+
+.button-file i::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(hsl(var(--accent)) 50%, hsl(var(--primary)) 0); /* Accent color gradient */
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: rotate-border 3s linear infinite;
+}
+
+.button-file:hover i::before {
+  animation-play-state: paused;
+}
+
+@keyframes rotate-border {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

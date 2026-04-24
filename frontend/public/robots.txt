@@ -1,0 +1,5 @@
+# Hustloop robots.txt
+User-agent: *
+
+
+Sitemap: https://hustloop.com/sitemap.xml

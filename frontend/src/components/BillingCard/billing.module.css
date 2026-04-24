@@ -1,0 +1,58 @@
+.fancy {
+    --offset: 3px;
+    border-radius: 50px;
+    position: relative;
+    /* height: 75px; Removed fixed height here, let content dictate */
+    /* width: 400px; Removed fixed width here, let content dictate */
+    max-width: 80%;
+    overflow: hidden;
+    /* Ensure a background is set for fancy itself, which ::after will inherit if needed */
+ /* Or a specific color like background-color: var(--card-background-color); */
+    padding: var(--offset); /* Add padding here so the content doesn't overlap the border */
+    display: flex; /* Helps with layout */
+    flex-direction: column; /* Stacks content vertically */
+    align-items: center; /* Centers content horizontally */
+}
+
+/* Conic gradient - this is the "fancy" part */
+.fancy::before {
+    content: '';
+    background: linear-gradient(180deg, white, transparent);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    aspect-ratio: 1;
+    width: 60%; /* Cover the entire fancy container */
+    animation: rotate 2s linear infinite;
+    z-index: 0; /* Ensure it's behind the actual content */
+}
+
+/* Overlay for the inner content. This will create the "cutout" where your summary sits */
+.fancy::after {
+    content: ''; /* Use a CSS variable or a specific color for the inner background */
+    border-radius: 40px;
+    position: absolute;
+    inset: var(--offset);
+    z-index: 1; /* Ensure it's above ::before but below the summary */
+}
+
+/* Ensure the summary has a background and is positioned correctly */
+/* This specific class is from your component, assuming it maps to a real CSS class */
+.summary-styling { /* Replace with the actual class your summary has */
+    position: relative;
+    z-index: 2; /* Ensure it's above ::after */
+    background-color: var(--card-background-color, var(--tw-bg-opacity, 1) ); /* Ensure it has a background */
+    border-radius: inherit; /* To match the outer fancy container */
+    /* Other summary styles */
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) scale(1.4) rotate(0turn);
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
+    }
+}
